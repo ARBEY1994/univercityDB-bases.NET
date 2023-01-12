@@ -1,28 +1,33 @@
 ﻿
-using Newtonsoft.Json;
+
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
+
 
 namespace univercityApiBackend.Models.DataModels
 {
+
+    public enum Level
+    {
+        Basic,Medium,Advanced
+    }
     public class Curso: BaseEntity
     {
-        [Required]
+        [Required,StringLength(50)]
         public string Name { get; set; } = string.Empty;
 
         [Required, StringLength(280)]
-        public string Descripcion_corta { get; set; } = string.Empty;
+        public string ShortDescription { get; set; } = string.Empty;
 
         [Required]
-        public string Descripcion_larga { get; set; } = string.Empty;
+        public string LongDescription { get; set; } = string.Empty;
         [Required]
-        public string Publico_objetivo { get; set; } = string.Empty;
+        public string TargetAudiences { get; set; } = string.Empty;
         [Required]
-        public string Objetivos { get; set; } = string.Empty;
+        public string Objectives { get; set; } = string.Empty;
         [Required]
-        public string Requisitos { get; set; } = string.Empty;
-        [Required]
-        public  string Nivel { get; set; } = string.Empty;
+        public string Requirements { get; set; } = string.Empty;
+        
+        public Level Level { get; set; } = Level.Basic;
        
    
        
