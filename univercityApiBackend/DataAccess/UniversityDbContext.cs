@@ -11,6 +11,10 @@ namespace univercityApiBackend.DataAccess
         }
         // Add DbSets (tables of our data base)
 
-        public DbSet<Curso>? cursos { get; set; }
+        public DbSet<Curso>? Cursos { get; set; }
+        public DbSet<User>? Users { get; set; }
+        public DbSet<Category>? Categories { get; set; }
+        public DbSet<Student>? Students { get; set; }
+        public DbSet<Chapter>? Chapters{ get; set; }
     }
 }

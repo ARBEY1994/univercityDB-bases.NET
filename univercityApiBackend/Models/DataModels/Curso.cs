@@ -28,8 +28,14 @@ namespace univercityApiBackend.Models.DataModels
         public string Requirements { get; set; } = string.Empty;
         
         public Level Level { get; set; } = Level.Basic;
-       
-   
+
+        [Required]
+        public ICollection<Category> Categories { get; set; } = new List<Category>();
+
+        [Required]
+        public Chapter Chapter{ get; set; } = new Chapter();
+        [Required]
+        public ICollection<Student> Students { get; set; }= new List<Student>();
        
 
 
