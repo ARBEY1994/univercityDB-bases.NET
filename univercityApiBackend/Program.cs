@@ -1,6 +1,7 @@
 // 1. Usings para trabajar con entityFramework
 using Microsoft.EntityFrameworkCore;
 using univercityApiBackend.DataAccess;
+using univercityApiBackend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,21 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// 4. add custom services (folder services)
+builder.Services.AddScoped<IEstudentService, StudentService>();
+// TODO:  add the rest services
+
+//5. CORS configuration
+builder.Services.AddCors(options=>
+{
+    options.AddPolicy(name: "CorsPolicy", builder =>
+    {
+        builder.AllowAnyOrigin();
+        builder.AllowAnyMethod();
+        builder.AllowAnyHeader();
+    }
+        );
+});
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
@@ -30,5 +46,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+// 6. tell app use cors
+app.UseCors("CorsPolicy");
 
 app.Run();
