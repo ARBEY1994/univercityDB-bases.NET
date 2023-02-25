@@ -11,10 +11,13 @@ var ConnectionStrings = builder.Configuration.GetConnectionString(CONNECTIONNAME
 
 // 3. add contex 
 builder.Services.AddDbContext<UniversityDbContext>(options => options.UseSqlServer(ConnectionStrings));
-
+// 7. Add services of JWT autorization
+//TODO
+//builder.Services.AddJwtTokenServices(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+//TOTO: config swager para que tenga en cuenta la autorizacion jwt
 builder.Services.AddSwaggerGen();
 
 // 4. add custom services (folder services)
