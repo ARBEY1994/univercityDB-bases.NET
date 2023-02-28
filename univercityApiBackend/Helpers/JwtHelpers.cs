@@ -20,7 +20,7 @@ namespace univercityApiBackend.Helpers
             };
             if(userAccounts.UserName == "admin")
             {
-                claims.Add(new Claim(ClaimTypes.Role, "administrador"));
+                claims.Add(new Claim(ClaimTypes.Role, "Administrator"));
             }else if (userAccounts.UserName=="User 1")
             {
                 claims.Add(new Claim(ClaimTypes.Role, "User"));

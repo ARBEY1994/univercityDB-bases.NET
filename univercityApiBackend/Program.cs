@@ -1,5 +1,7 @@
 // 1. Usings para trabajar con entityFramework
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using univercityApiBackend;
 using univercityApiBackend.DataAccess;
 using univercityApiBackend.Services;
 
@@ -13,16 +15,54 @@ var ConnectionStrings = builder.Configuration.GetConnectionString(CONNECTIONNAME
 builder.Services.AddDbContext<UniversityDbContext>(options => options.UseSqlServer(ConnectionStrings));
 // 7. Add services of JWT autorization
 //TODO
-//builder.Services.AddJwtTokenServices(builder.Configuration);
+builder.Services.AddJwtTokenServices(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-//TOTO: config swager para que tenga en cuenta la autorizacion jwt
-builder.Services.AddSwaggerGen();
+//config swager para que tenga en cuenta la autorizacion jwt
+builder.Services.AddSwaggerGen( options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "jwt",
+        In = ParameterLocation.Header,
+        Description= "JWT authorization header using bearer scheme"
+    }
+
+    );
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference= new OpenApiReference
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[]{}
+        }
+
+    });
+}
+
+    
+    
+    );
 
 // 4. add custom services (folder services)
 builder.Services.AddScoped<IEstudentService, StudentService>();
 // TODO:  add the rest services
+
+// 8. add authorization
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("UserOnlyPolicy", policy => policy.RequireClaim("UserOnly", "User1"));
+});
 
 //5. CORS configuration
 builder.Services.AddCors(options=>
